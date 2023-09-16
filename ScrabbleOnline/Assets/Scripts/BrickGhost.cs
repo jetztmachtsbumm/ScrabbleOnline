@@ -23,7 +23,7 @@ public class BrickGhost : NetworkBehaviour
 
     void Update()
     {
-        transform.position = MouseWorld.Instance.GetMouseWorldPosition() + new Vector3(0, 3, 0);
+        transform.position = GridSystem.Instance.SnapToGrid(MouseWorld.Instance.GetMouseWorldPosition()) + new Vector3(0, 3, 0);
     }
 
     [ServerRpc(RequireOwnership = false)] 
