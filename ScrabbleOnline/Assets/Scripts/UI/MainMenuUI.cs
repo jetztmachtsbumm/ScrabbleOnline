@@ -20,7 +20,6 @@ public class MainMenuUI : MonoBehaviour
         _startClientButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
-            NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
         });
     }
 
