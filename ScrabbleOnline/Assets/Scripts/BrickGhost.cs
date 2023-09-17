@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class BrickGhost : NetworkBehaviour
 {
@@ -23,13 +22,23 @@ public class BrickGhost : NetworkBehaviour
 
     void Update()
     {
-        transform.position = GridSystem.Instance.SnapToGrid(MouseWorld.Instance.GetMouseWorldPosition()) + new Vector3(0, 3, 0);
+        if (MultiplayerManager.Instance.IsClientInTurn())
+        {
+            ChangePositionServerRpc(GridSystem.Instance.GetCellAtPosition(MouseWorld.Instance.GetMouseWorldPosition()));
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangePositionServerRpc(GridCell gridCell)
+    {
+        transform.position = GridSystem.Instance.GetWorldPosition(gridCell) + new Vector3(0, 3, 0);
     }
 
     [ServerRpc(RequireOwnership = false)] 
     public void CreateBrickVisualServerRpc()
     {
         CreateBrickVisualClientRpc();
+        MultiplayerManager.Instance.SetNextPlayerInTurnServerRpc();
     }
 
     [ClientRpc]

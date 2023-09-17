@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2620261417111371640}
   - component: {fileID: 7293786890371504764}
   - component: {fileID: 8886933504048430117}
-  - component: {fileID: 3795278231939793993}
+  - component: {fileID: 6477428993202874470}
   m_Layer: 0
   m_Name: BrickGhost
   m_TagString: Untagged
@@ -114,8 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addd08e16869bf74c8e29ad0601c2ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brickVisualPrefab: {fileID: 0}
---- !u!114 &3795278231939793993
+  _brickVisualPrefab: {fileID: 2468005853206995174, guid: d96523eb8e8bbd249b8ee21ca7656c2c,
+    type: 3}
+--- !u!114 &6477428993202874470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
