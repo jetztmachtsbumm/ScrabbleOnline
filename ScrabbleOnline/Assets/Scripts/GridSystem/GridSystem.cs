@@ -7,10 +7,10 @@ public class GridSystem : MonoBehaviour
 
     public static GridSystem Instance { get; private set; }
 
-    [SerializeField] private int width;
-    [SerializeField] private int height;
+    [SerializeField] int _width;
+    [SerializeField] int _height;
 
-    GridCell[,] cells;
+    GridCell[,] _cells;
 
     void Awake()
     {
@@ -27,13 +27,13 @@ public class GridSystem : MonoBehaviour
 
     void CreateCells()
     {
-        cells = new GridCell[width, height];
+        _cells = new GridCell[_width, _height];
 
-        for(int x = 0; x < width; x++)
+        for(int x = 0; x < _width; x++)
         {
-            for(int z = 0; z < height; z++)
+            for(int z = 0; z < _height; z++)
             {
-                cells[x,z] = new GridCell(x, z);
+                _cells[x,z] = new GridCell(x, z, new char());
             }
         }
     }
@@ -48,12 +48,12 @@ public class GridSystem : MonoBehaviour
         int x = Mathf.RoundToInt(position.x);
         int z = Mathf.RoundToInt(position.z);
 
-        if (cells == null)
+        if (_cells == null)
         {
             return new GridCell();
         }
 
-        return cells[x, z];
+        return _cells[x, z];
     }
 
     public Vector3 SnapToGrid(Vector3 worldPos)

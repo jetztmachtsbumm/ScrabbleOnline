@@ -21,7 +21,7 @@ public class PlayerControlls : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (MultiplayerManager.Instance.IsClientInTurn())
+            if (GameManager.Instance.IsClientInTurn())
             {
                 BrickGhost.Instance.CreateBrickVisualServerRpc();
             }

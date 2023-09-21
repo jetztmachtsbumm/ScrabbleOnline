@@ -22,7 +22,7 @@ public class BrickGhost : NetworkBehaviour
 
     void Update()
     {
-        if (MultiplayerManager.Instance.IsClientInTurn())
+        if (GameManager.Instance.IsClientInTurn())
         {
             ChangePositionServerRpc(GridSystem.Instance.GetCellAtPosition(MouseWorld.Instance.GetMouseWorldPosition()));
         }
@@ -38,7 +38,7 @@ public class BrickGhost : NetworkBehaviour
     public void CreateBrickVisualServerRpc()
     {
         CreateBrickVisualClientRpc();
-        MultiplayerManager.Instance.SetNextPlayerInTurnServerRpc();
+        GameManager.Instance.SetNextPlayerInTurnServerRpc();
     }
 
     [ClientRpc]

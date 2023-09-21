@@ -7,19 +7,20 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
 
-    [SerializeField] Button _startHostButton;
-    [SerializeField] Button _startClientButton;
+    [SerializeField] Button _playButton;
+    [SerializeField] Button _quitButton;
+    [SerializeField] Transform _lobbyUI;
 
     private void Awake()
     {
-        _startHostButton.onClick.AddListener(() =>
+        _playButton.onClick.AddListener(() =>
         {
-            NetworkManager.Singleton.StartHost();
-            NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            _lobbyUI.gameObject.SetActive(true);
+            gameObject.SetActive(false);
         });
-        _startClientButton.onClick.AddListener(() =>
+        _quitButton.onClick.AddListener(() =>
         {
-            NetworkManager.Singleton.StartClient();
+            Application.Quit();
         });
     }
 

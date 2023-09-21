@@ -9,11 +9,13 @@ public struct GridCell : IEquatable<GridCell>, INetworkSerializable
     
     int x;
     int z;
+    char letter;
 
-    public GridCell(int x, int z)
+    public GridCell(int x, int z, char letter)
     {
         this.x = x;
         this.z = z;
+        this.letter = letter;
     }
 
     public int GetX()
@@ -26,6 +28,11 @@ public struct GridCell : IEquatable<GridCell>, INetworkSerializable
         return z;
     }
 
+    public char GetLetter()
+    {
+        return letter;
+    }
+
     public bool Equals(GridCell other)
     {
         return x == other.x && z == other.z;
@@ -35,5 +42,6 @@ public struct GridCell : IEquatable<GridCell>, INetworkSerializable
     {
         serializer.SerializeValue(ref x);
         serializer.SerializeValue(ref z);
+        serializer.SerializeValue(ref letter);
     }
 }
