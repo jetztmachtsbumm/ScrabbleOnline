@@ -359,6 +359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _brickVisualPrefab: {fileID: 2468005853206995174, guid: d96523eb8e8bbd249b8ee21ca7656c2c,
     type: 3}
+  _letterText: {fileID: 271435872140591099}
+  _scoreText: {fileID: 8601833468550618825}
 --- !u!114 &6477428993202874470
 MonoBehaviour:
   m_ObjectHideFlags: 0

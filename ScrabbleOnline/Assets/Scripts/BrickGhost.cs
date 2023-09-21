@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BrickGhost : NetworkBehaviour
 {
@@ -9,6 +11,10 @@ public class BrickGhost : NetworkBehaviour
     public static BrickGhost Instance { get; private set; }
 
     [SerializeField] Transform _brickVisualPrefab;
+    [SerializeField] TextMeshProUGUI _letterText;
+    [SerializeField] TextMeshProUGUI _scoreText;
+
+    LetterData _currentLetterData;
 
     public void Awake()
     {
@@ -22,7 +28,7 @@ public class BrickGhost : NetworkBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.IsClientInTurn())
+        if (GameManager.Instance.IsClientInTurn() && !EventSystem.current.IsPointerOverGameObject())
         {
             ChangePositionServerRpc(GridSystem.Instance.GetCellAtPosition(MouseWorld.Instance.GetMouseWorldPosition()));
         }
@@ -35,16 +41,32 @@ public class BrickGhost : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)] 
-    public void CreateBrickVisualServerRpc()
+    public void CreateBrickVisualServerRpc(GridCell gridCell)
     {
-        CreateBrickVisualClientRpc();
+        CreateBrickVisualClientRpc(gridCell);
         GameManager.Instance.SetNextPlayerInTurnServerRpc();
     }
 
     [ClientRpc]
-    void CreateBrickVisualClientRpc()
+    void CreateBrickVisualClientRpc(GridCell gridCell)
     {
-        Instantiate(_brickVisualPrefab, transform.position + new Vector3(0, -3, 0), Quaternion.identity);
+        Transform brickVisual = Instantiate(_brickVisualPrefab, GridSystem.Instance.GetWorldPosition(gridCell) + new Vector3(0, 0.25f, 0), Quaternion.identity);
+        brickVisual.Find("Canvas").Find("Letter").GetComponent<TextMeshProUGUI>().text = _currentLetterData.GetLetter();
+        brickVisual.Find("Canvas").Find("Score").GetComponent<TextMeshProUGUI>().text = _currentLetterData.GetScore().ToString();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetCurrentLetterDataServerRpc(LetterData letterData)
+    {
+        SetCurrentLetterDataClientRpc(letterData);
+    }
+
+    [ClientRpc]
+    void SetCurrentLetterDataClientRpc(LetterData letterData)
+    {
+        _currentLetterData = letterData;
+        _letterText.text = letterData.GetLetter();
+        _scoreText.text = letterData.GetScore().ToString();
     }
 
 }

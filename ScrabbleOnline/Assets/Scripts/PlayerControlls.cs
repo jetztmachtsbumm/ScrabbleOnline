@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerControlls : MonoBehaviour
 {
@@ -21,9 +22,9 @@ public class PlayerControlls : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (GameManager.Instance.IsClientInTurn())
+            if (GameManager.Instance.IsClientInTurn() && !EventSystem.current.IsPointerOverGameObject())
             {
-                BrickGhost.Instance.CreateBrickVisualServerRpc();
+                BrickGhost.Instance.CreateBrickVisualServerRpc(GridSystem.Instance.GetCellAtPosition(MouseWorld.Instance.GetMouseWorldPosition()));
             }
         }    
     }

@@ -17,9 +17,9 @@ public struct LetterData : INetworkSerializable
         this.score = score;
     }
 
-    public char GetLetter()
+    public string GetLetter()
     {
-        return letter;
+        return letter.ToString();
     }
 
     public int GetTotalAmount()

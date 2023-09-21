@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AvailableLettersUI : MonoBehaviour
 {
@@ -26,8 +27,13 @@ public class AvailableLettersUI : MonoBehaviour
         {
             Transform UILetter = Instantiate(_letterTemplate, transform);
 
-            UILetter.Find("Letter").GetComponent<TextMeshProUGUI>().text = letter.GetLetter().ToString();
+            UILetter.Find("Letter").GetComponent<TextMeshProUGUI>().text = letter.GetLetter();
             UILetter.Find("Score").GetComponent<TextMeshProUGUI>().text = letter.GetScore().ToString();
+
+            UILetter.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                BrickGhost.Instance.SetCurrentLetterDataServerRpc(letter);
+            });
         }    
     }
 
